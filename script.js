@@ -18,7 +18,7 @@ $(document).ready(function() {
       povertyChanges = values[0];
       min = values[1];
       max = values[2];
-      colorScale = d3.scale.linear().domain([min, max]).range(['red', 'green']);
+      colorScale = d3.scale.linear().domain([min, (max + min) / 2, max]).range(['red', 'yellow', 'green']);
       svg.selectAll('path')
           .data(json.features)
           .enter()
