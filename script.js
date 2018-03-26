@@ -12,13 +12,19 @@ $(document).ready(function() {
       .attr('width', width)
       .attr('height', height);
 
-  d3.csv("povertydata.csv", function(data) {
+  var defs = svg.append('defs');
+
+  var linearGradient = defs.append('linearGradient')
+      .attr('id', 'linear-gradient');
+
+  d3.csv('povertydata.csv', function(data) {
     d3.json('us-states.json', function(json) {
       values = calculatePovertyChanges(data, 1980, 2016);
       povertyChanges = values[0];
       min = values[1];
       max = values[2];
       colorScale = d3.scale.linear().domain([min, (max + min) / 2, max]).range(['red', 'yellow', 'green']);
+      // Add map to svg
       svg.selectAll('path')
           .data(json.features)
           .enter()
@@ -29,6 +35,31 @@ $(document).ready(function() {
           .style('fill', function(d) {
             return colorScale(povertyChanges[d.properties.name]);
           });
+      // Calculate linear gradient based on color scale
+      linearGradient.selectAll('stop')
+          .data( colorScale.range() )
+          .enter().append('stop')
+          .attr('offset', function(d,i) { return i/(colorScale.range().length-1); })
+          .attr('stop-color', function(d) { return d; });
+      // Add scale to svg, based on linear gradient
+      svg.append('rect')
+    	    .attr('width', 300)
+    	    .attr('height', 20)
+          .attr('x', width/2 - 150)
+          .attr('y', height - 20)
+    	    .style('fill', 'url(#linear-gradient)');
+      // Add lower label of scale
+      svg.append('text')
+          .attr('x', width/2 - 150)
+          .attr('y', height - 5)
+          .style('fill', 'white')
+          .text(Math.abs(min).toFixed(2) + '%');
+      // Add upper level of scale
+      svg.append('text')
+          .attr('x', width/2 + 103)
+          .attr('y', height - 5)
+          .style('fill', 'white')
+          .text((Math.abs(max) * -1).toFixed(2) + '%');
     });
   });
 
