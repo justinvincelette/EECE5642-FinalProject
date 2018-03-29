@@ -45,20 +45,19 @@ $(document).ready(function() {
       svg.append('rect')
     	    .attr('width', 300)
     	    .attr('height', 20)
-          .attr('x', width/2 - 150)
-          .attr('y', height - 20)
+          .attr('x', 100)
+          .attr('y', -width + 70)
+          .attr('transform', 'rotate(90)')
     	    .style('fill', 'url(#linear-gradient)');
       // Add lower label of scale
       svg.append('text')
-          .attr('x', width/2 - 150)
-          .attr('y', height - 5)
-          .style('fill', 'white')
+          .attr('x', width - 65)
+          .attr('y', 115)
           .text(Math.abs(min).toFixed(2) + '%');
       // Add upper level of scale
       svg.append('text')
-          .attr('x', width/2 + 103)
-          .attr('y', height - 5)
-          .style('fill', 'white')
+          .attr('x', width - 65)
+          .attr('y', 400)
           .text((Math.abs(max) * -1).toFixed(2) + '%');
     });
   });
