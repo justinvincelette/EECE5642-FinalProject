@@ -46,6 +46,7 @@ $(document).ready(function() {
           .attr('stop-color', function(d) { return d; });
       // Add scale to svg, based on linear gradient
       svg.append('rect')
+          .attr('id', 'rectid')
     	    .attr('width', 300)
     	    .attr('height', 20)
           .attr('x', 100)
@@ -56,12 +57,14 @@ $(document).ready(function() {
       svg.append('text')
           .attr('x', width - 65)
           .attr('y', 115)
-          .text(Math.abs(min).toFixed(2) + '%');
+          .attr('id', 'textlower')
+          .text(Math.abs(min).toFixed(2)*-1 + '%');
       // Add upper level of scale
       svg.append('text')
           .attr('x', width - 65)
           .attr('y', 400)
-          .text((Math.abs(max) * -1).toFixed(2) + '%');
+          .attr('id', 'textupper')
+          .text((Math.abs(max)).toFixed(2) + '%');
     });
   });
 
