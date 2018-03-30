@@ -1,3 +1,33 @@
 body {
   text-align: center;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+h2 {
+  margin-bottom: 0px;
+}
+
+p {
+  margin-top: 0px;
+}
+
+.container {
+  width: 960px;
+  margin: auto;
+}
+
+.title {
+  font-size: 60px;
+}
+
+.yearTo {
+  font-size: 20px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.year {
+  color: #0717aa;
+  font-size: 30px;
+  font-weight: bold;
 }

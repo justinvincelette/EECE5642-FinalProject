@@ -4,8 +4,8 @@ $(document).ready(function() {
   var width = 960;
   var height = 500;
 
-  var startYear = 1990;
-  var endYear = 1994;
+  var startYear = 1980;
+  var endYear = 2016;
 
   var projection = d3.geo.albersUsa().translate([width/2, height/2]).scale([1000]);
   var path = d3.geo.path().projection(projection);

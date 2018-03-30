@@ -2,7 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>US Poverty</title>
+    <title>US Poverty Changes</title>
+    <!-- Google Ubuntu font -->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css"/>
     <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
          rel = "stylesheet">
@@ -17,13 +19,13 @@
                range:true,
                min: 1980,
                max: 2016,
-               values: [ 1990, 1996 ],
+               values: [ 1980, 2016 ],
                slide: function( event, ui ) {
                   if ( ( ui.values[ 0 ]) >= ui.values[ 1 ] ) {
                     return false;
                   }
-                  $( "#startYear" ).val(ui.values[ 0 ]);
-                  $( "#endYear" ).val(ui.values[ 1 ]);
+                  $( "#startYear" ).text(ui.values[ 0 ]);
+                  $( "#endYear" ).text(ui.values[ 1 ]);
                   updateMap(ui.values[0], ui.values[1]);
                }
             });
@@ -33,16 +35,15 @@
       </script>
   </head>
   <body>
-    <h1>U.S. Poverty, What Can We Do?</h1>
-    <h5>Dual Slider</h5>
-    <p>
-      <label for = "price">Starting year: </label>
-      <input type = "text" id = "startYear" 
-         style = "border:0; color:#0717aa; font-weight:bold;">
-      <label for = "price">Ending year: </label>
-      <input type = "text" id = "endYear" 
-        style = "border:0; color:#0717aa; font-weight:bold;">
-   </p>
-   <div id = "slider-3"></div>
+    <div class='container'>
+      <h1 class='title'>U.S. Poverty, What Can We Do?</h1>
+      <h2>Poverty Rate Changes From:</h2>
+      <p>
+        <span class = 'year' type = "text" id = "startYear">1980</span>
+        <span class='yearTo'>to</span>
+        <span class = 'year' type = "text" id = "endYear">2016</span>
+     </p>
+     <div id = "slider-3"></div>
+  </div>
   </body>
 </html>
