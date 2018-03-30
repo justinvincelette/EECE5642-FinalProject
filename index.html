@@ -9,20 +9,22 @@
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src ="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src='script.js'></script>
+    <script type="text/javascript" src='script.js'></script>
+    <script type="text/javascript" src='joe.js'></script>
     <script>
          $(function() {
             $( "#slider-3" ).slider({
                range:true,
-               min: 1960,
-               max: 2000,
-               values: [ 1970, 1990 ],
+               min: 1980,
+               max: 2016,
+               values: [ 1990, 1996 ],
                slide: function( event, ui ) {
                   if ( ( ui.values[ 0 ]) >= ui.values[ 1 ] ) {
                     return false;
                   }
                   $( "#startYear" ).val(ui.values[ 0 ]);
                   $( "#endYear" ).val(ui.values[ 1 ]);
+                  updateMap(ui.values[0], ui.values[1]);
                }
             });
             $( "#startYear" ).val($( "#slider-3" ).slider( "values", 0 ));

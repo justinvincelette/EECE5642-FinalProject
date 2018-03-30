@@ -1,11 +1,17 @@
-$(document).ready(function() {
+function updateMap(startYear, endYear) {
+    console.log("Map should be updated for " + startYear + " to " + endYear);
+    go(startYear, endYear);
+
+  }
+
+function go(start, end) {
   var values, povertyChanges, min, max, colorScale;
 
   var width = 960;
   var height = 500;
 
-  var startYear = 1990;
-  var endYear = 1994;
+  var startYear = start;
+  var endYear = end;
 
   var projection = d3.geo.albersUsa().translate([width/2, height/2]).scale([1000]);
   var path = d3.geo.path().projection(projection);
@@ -13,7 +19,7 @@ $(document).ready(function() {
   var svg = d3.select('body')
       .append('svg')
       .attr('width', width)
-      .attr('height', height);
+      .attr('height', height)
 
   var defs = svg.append('defs');
 
@@ -64,8 +70,7 @@ $(document).ready(function() {
           .text((Math.abs(max) * -1).toFixed(2) + '%');
     });
   });
-
-});
+}
 
 function calculatePovertyChanges(data, start, end) {
   var min = 100;
@@ -83,4 +88,4 @@ function calculatePovertyChanges(data, start, end) {
     }
   }
   return [result, min, max];
-}
+}  
