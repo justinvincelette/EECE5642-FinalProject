@@ -4,12 +4,43 @@
     <meta charset="utf-8">
     <title>US Poverty</title>
     <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src ="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src='script.js'></script>
+    <script>
+         $(function() {
+            $( "#slider-3" ).slider({
+               range:true,
+               min: 1960,
+               max: 2000,
+               values: [ 1970, 1990 ],
+               slide: function( event, ui ) {
+                  if ( ( ui.values[ 0 ]) >= ui.values[ 1 ] ) {
+                    return false;
+                  }
+                  $( "#startYear" ).val(ui.values[ 0 ]);
+                  $( "#endYear" ).val(ui.values[ 1 ]);
+               }
+            });
+            $( "#startYear" ).val($( "#slider-3" ).slider( "values", 0 ));
+            $( "#endYear" ).val($( "#slider-3" ).slider( "values", 1 ));
+         });
+      </script>
   </head>
   <body>
     <h1>U.S. Poverty, What Can We Do?</h1>
-
+    <h5>Dual Slider</h5>
+    <p>
+      <label for = "price">Starting year: </label>
+      <input type = "text" id = "startYear" 
+         style = "border:0; color:#0717aa; font-weight:bold;">
+      <label for = "price">Ending year: </label>
+      <input type = "text" id = "endYear" 
+        style = "border:0; color:#0717aa; font-weight:bold;">
+   </p>
+   <div id = "slider-3"></div>
   </body>
 </html>
