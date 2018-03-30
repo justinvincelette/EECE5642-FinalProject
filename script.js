@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  var values, povertyChanges, min, max, colorScale;
+  var values, povertyChanges, min, max, colorScale, allData;
 
   var width = 960;
   var height = 500;
@@ -22,6 +22,7 @@ $(document).ready(function() {
 
   d3.csv('povertydata.csv', function(data) {
     d3.json('us-states.json', function(json) {
+      allData = data;
       values = calculatePovertyChanges(data, startYear, endYear);
       povertyChanges = values[0];
       min = values[1];
@@ -37,6 +38,17 @@ $(document).ready(function() {
           .style('stroke-width', '1')
           .style('fill', function(d) {
             return colorScale(povertyChanges[d.properties.name]);
+          })
+          .on('mouseover', function(d) {
+            var state = d.properties.name;
+            $('#state').text(state + ' ');
+            $('#state').css('color', colorScale(povertyChanges[state]));
+            $('#percentage').text(povertyChanges[state].toFixed(2) + '%');
+            $('#percentage').css('color', colorScale(povertyChanges[state]));
+          })
+          .on('mouseout', function() {
+            $('#state').text('');
+            $('#percentage').text('');
           });
       // Calculate linear gradient based on color scale
       linearGradient.selectAll('stop')
@@ -57,15 +69,45 @@ $(document).ready(function() {
       svg.append('text')
           .attr('x', width - 65)
           .attr('y', 115)
-          .attr('id', 'textlower')
+          .attr('id', 'textupper')
           .text(Math.abs(min).toFixed(2)*-1 + '%');
       // Add upper level of scale
       svg.append('text')
           .attr('x', width - 65)
           .attr('y', 400)
-          .attr('id', 'textupper')
+          .attr('id', 'textlower')
           .text((Math.abs(max)).toFixed(2) + '%');
     });
+  });
+
+  $( "#slider-3" ).slider({
+     range:true,
+     min: 1980,
+     max: 2016,
+     values: [ startYear, endYear ],
+     slide: function( event, ui ) {
+        if ( ( ui.values[ 0 ]) >= ui.values[ 1 ] ) {
+          return false;
+        }
+        startYear = ui.values[0];
+        endYear = ui.values[1];
+        $( "#startYear" ).text(startYear);
+        $( "#endYear" ).text(endYear);
+
+        values = calculatePovertyChanges(allData, startYear, endYear);
+        povertyChanges = values[0];
+        min = values[1];
+        max = values[2];
+        colorScale = d3.scale.linear().domain([min, (max + min) / 2, max]).range(['red', 'yellow', 'green']);
+
+        // update Map
+        svg.selectAll('path')
+            .style('fill', function(d) {
+              return colorScale(povertyChanges[d.properties.name]);
+            });
+        document.getElementById('textupper').textContent = String((Math.abs(min) * -1).toFixed(2)) + '%';
+        document.getElementById('textlower').textContent = String((Math.abs(max)).toFixed(2)) + '%';
+     }
   });
 
 });

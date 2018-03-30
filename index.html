@@ -13,26 +13,6 @@
     <script src ="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script type="text/javascript" src='script.js'></script>
     <script type="text/javascript" src='update.js'></script>
-    <script>
-         $(function() {
-            $( "#slider-3" ).slider({
-               range:true,
-               min: 1980,
-               max: 2016,
-               values: [ 1980, 2016 ],
-               slide: function( event, ui ) {
-                  if ( ( ui.values[ 0 ]) >= ui.values[ 1 ] ) {
-                    return false;
-                  }
-                  $( "#startYear" ).text(ui.values[ 0 ]);
-                  $( "#endYear" ).text(ui.values[ 1 ]);
-                  updateMap(ui.values[0], ui.values[1]);
-               }
-            });
-            $( "#startYear" ).val($( "#slider-3" ).slider( "values", 0 ));
-            $( "#endYear" ).val($( "#slider-3" ).slider( "values", 1 ));
-         });
-      </script>
   </head>
   <body>
     <div class='container'>
@@ -44,6 +24,7 @@
         <span class = 'year' type = "text" id = "endYear">2016</span>
      </p>
      <div id = "slider-3"></div>
+     <div class='tooltip'><h1 class='box'><span id='state'></span><span id='percentage'></span></h1></div>
   </div>
   </body>
 </html>

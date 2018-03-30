@@ -31,3 +31,18 @@ p {
   font-size: 30px;
   font-weight: bold;
 }
+
+.tooltip {
+  position: absolute;
+  top: 750px;
+  text-align: center;
+  width: 50%;
+}
+
+#state, #percentage {
+  text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000; 
+}
