@@ -15,6 +15,13 @@ $(document).ready(function() {
       .attr('width', width)
       .attr('height', height);
 
+  var tooltip = svg.append('text')
+      .attr('x', width/2)
+      .attr('y', 40)
+      .attr('id', 'tooltip')
+      .style('text-anchor', 'middle')
+      .text('');
+
   var defs = svg.append('defs');
 
   var linearGradient = defs.append('linearGradient')
@@ -41,14 +48,12 @@ $(document).ready(function() {
           })
           .on('mouseover', function(d) {
             var state = d.properties.name;
-            $('#state').text(state + ' ');
-            $('#state').css('color', colorScale(povertyChanges[state]));
-            $('#percentage').text(povertyChanges[state].toFixed(2) + '%');
-            $('#percentage').css('color', colorScale(povertyChanges[state]));
+            svg.selectAll('#tooltip')
+                .text(state + ' ' + povertyChanges[state].toFixed(2) + '%')
+                .style('fill', colorScale(povertyChanges[state]));
           })
           .on('mouseout', function() {
-            $('#state').text('');
-            $('#percentage').text('');
+            svg.selectAll('#tooltip').text('');
           });
       // Calculate linear gradient based on color scale
       linearGradient.selectAll('stop')
