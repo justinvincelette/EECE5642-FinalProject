@@ -49,7 +49,7 @@ $(document).ready(function() {
           .on('mouseover', function(d) {
             var state = d.properties.name;
             svg.selectAll('#tooltip')
-                .text(state + ' ' + povertyChanges[state].toFixed(2) + '%')
+                .text(state + ' ' + (povertyChanges[state] * -1).toFixed(2) + '%')
                 .style('fill', colorScale(povertyChanges[state]));
           })
           .on('mouseout', function() {
@@ -75,13 +75,22 @@ $(document).ready(function() {
           .attr('x', width - 65)
           .attr('y', 115)
           .attr('id', 'textupper')
-          .text(Math.abs(min).toFixed(2)*-1 + '%');
+          .text(Math.abs(min).toFixed(2) + '%');
       // Add upper level of scale
       svg.append('text')
           .attr('x', width - 65)
           .attr('y', 400)
           .attr('id', 'textlower')
-          .text((Math.abs(max)).toFixed(2) + '%');
+          .text((Math.abs(max) * -1).toFixed(2) + '%');
+      // Add labels
+      var increased = svg.append('text')
+          .attr('x', width - 135)
+          .attr('y', 95)
+          .text('Poverty Increased');
+      var increased = svg.append('text')
+          .attr('x', width - 135)
+          .attr('y', 417)
+          .text('Poverty Decreased');
     });
   });
 
@@ -110,8 +119,8 @@ $(document).ready(function() {
             .style('fill', function(d) {
               return colorScale(povertyChanges[d.properties.name]);
             });
-        document.getElementById('textupper').textContent = String((Math.abs(min) * -1).toFixed(2)) + '%';
-        document.getElementById('textlower').textContent = String((Math.abs(max)).toFixed(2)) + '%';
+        document.getElementById('textupper').textContent = String((Math.abs(min)).toFixed(2)) + '%';
+        document.getElementById('textlower').textContent = String((Math.abs(max) * -1).toFixed(2)) + '%';
      }
   });
 
