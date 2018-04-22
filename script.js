@@ -90,7 +90,24 @@ $(document).ready(function() {
       var increased = svg.append('text')
           .attr('x', width - 135)
           .attr('y', 417)
-          .text('Poverty Decreased');
+          .text('Poverty Decreased');   
+
+      // Add labels for best and worst performers
+      var bestPerformer = getBestPerformer(povertyChanges)
+      var worstPerformer = getWorstPerformer(povertyChanges) 
+      var bestState = svg.append('text')
+      .attr('x', width - 480)
+      .attr('y', 470)
+      .style("font-size", "16px")
+      .attr('id', 'bestPerformer')
+      .text('Most Improvement: ' + bestPerformer);  
+      var worstState = svg.append('text')
+      .attr('x', width - 480)
+      .attr('y', 490)
+      .style("font-size", "16px")
+      .attr('id', 'worstPerformer')
+      .text('Least Improvement: ' + worstPerformer); 
+
     });
   });
 
@@ -121,6 +138,8 @@ $(document).ready(function() {
             });
         document.getElementById('textupper').textContent = String((Math.abs(min)).toFixed(2)) + '%';
         document.getElementById('textlower').textContent = String((Math.abs(max) * -1).toFixed(2)) + '%';
+        document.getElementById('bestPerformer').textContent = 'Most Improvement: '+ String(getBestPerformer(povertyChanges));
+        document.getElementById('worstPerformer').textContent = 'Least Improvement: '+ String(getWorstPerformer(povertyChanges));
      }
   });
 
@@ -142,4 +161,12 @@ function calculatePovertyChanges(data, start, end) {
     }
   }
   return [result, min, max];
+}
+
+function getBestPerformer(povertyChanges) {
+  return Object.keys(povertyChanges).reduce((a, b) => povertyChanges[a] > povertyChanges[b] ? a : b);
+}
+
+function getWorstPerformer(povertyChanges) {
+  return Object.keys(povertyChanges).reduce((a, b) => povertyChanges[a] < povertyChanges[b] ? a : b);
 }
